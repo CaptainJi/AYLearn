@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchFrameException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
@@ -10,7 +11,7 @@ class Login(BasePage):
     '''
     首页PO
     '''
-    _base_url = 'http://auyan.21tb.com/'
+    _base_url = 'http://auyan.21tb.com/els/html/index.parser.do?id=NEW_COURSE_CENTER&current_app_id=8a80810f5ab29060015ad1906d0b3811#!%2Fels%2Fhtml%2FcourseCenter%2FcourseCenter.loadStudyTask.do'
 
     # def goto_register(self):
     #     '''
@@ -56,32 +57,8 @@ class Login(BasePage):
         self.find(By.ID, "password").send_keys(password)
         loginbutton = self.find(By.ID, "div4")
         loginbutton.click()
-        return Index(self._driver)
-
-
-if __name__ == '__main__':
-    import random
-
-    actualPrice = round(random.uniform(1, 4), 2)
-    gasQty = round(random.uniform(100, 4000), 2)
-    amount = round(actualPrice * gasQty, 2)
-    serviceFee = round(0.3 * gasQty, 2)
-    orderStatus = random.randint(2, 3)
-    payType = random.choice([0, 1, 2, 11])
-
-    if gasQty < 1000:
-        rebate = 0.26
-    if gasQty > 1000:
-        rebate = 0.28
-    else:
-        rebate = 0.3
-    discountAmount = round(gasQty * rebate, 2)
-
-    print(".........")
-    print(actualPrice)
-    print(gasQty)
-    print(amount)
-    print(orderStatus)
-    print(payType)
-    print(rebate)
-    print(".........")
+        try:
+            goto_login = self.find(By.XPATH, '//*[@id="dialog-content"]/div/input[1]')
+            goto_login.click()
+        except NoSuchFrameException:
+            return Index(self._driver)
