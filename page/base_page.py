@@ -11,7 +11,7 @@ class BasePage:
 
     def __init__(self, driver: WebDriver = None):
         if driver is None:
-            driver_url = r'D:\Project\edgedriver\msedgedriver.exe'
+            driver_url = r'../msedgedriver.exe'
             chrome_options = Options()
             # 浏览器复用命令 chrome --remote-debugging-port=9222
             # chrome_options.debugger_address = "127.0.0.1:9222"
@@ -42,7 +42,7 @@ class BasePage:
         :param locator:等待条件
         :return:
         '''
-        WebDriverWait(self._driver, 10).until(expected_conditions.element_to_be_clickable(locator))
+        WebDriverWait(self._driver, 3600).until(expected_conditions.element_to_be_clickable(locator))
 
     def wait_for_condition(self, condition):
         '''
@@ -50,4 +50,4 @@ class BasePage:
         :param condition: 等待条件
         :return:
         '''
-        WebDriverWait(self._driver, 20).until(condition)
+        WebDriverWait(self._driver, 3600).until(condition)

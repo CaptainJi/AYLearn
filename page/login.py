@@ -1,10 +1,11 @@
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchFrameException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 from page.base_page import BasePage
 from page.index import Index
+from page.myclass import Myclass
 
 
 class Login(BasePage):
@@ -52,13 +53,13 @@ class Login(BasePage):
     #     self.wait_for_condition(add_member_condition)
     #     return AddMember(self._driver)
 
-    def goto_index(self, username, password):
+    def goto_myclass(self, username, password):
         self.find(By.ID, 'loginName').send_keys(username)
         self.find(By.ID, "password").send_keys(password)
         loginbutton = self.find(By.ID, "div4")
         loginbutton.click()
         try:
-            goto_login = self.find(By.XPATH, '//*[@id="dialog-content"]/div/input[1]')
-            goto_login.click()
-        except NoSuchFrameException:
-            return Index(self._driver)
+            self.find(By.XPATH, '//*[@id="dialog-content"]/div/input[1]').click()
+            return Myclass(self._driver)
+        except NoSuchElementException:
+            return Myclass(self._driver)
